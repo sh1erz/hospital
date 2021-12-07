@@ -3,7 +3,6 @@ package model.dao.impl;
 import domain.Doctor;
 import domain.DoctorSpecialisation;
 import model.dao.connection.ConnectionFactory;
-import model.dao.connection.ConnectionFactoryImpl;
 import model.dao.interfaces.DoctorDao;
 
 import java.sql.PreparedStatement;

@@ -5,6 +5,24 @@ import model.dao.interfaces.*;
 
 public class DaoFactoryImpl implements DaoFactory {
 
+    private static volatile DaoFactoryImpl instance;
+
+    private DaoFactoryImpl() {
+    }
+
+    public static DaoFactoryImpl getInstance() {
+        DaoFactoryImpl result = instance;
+        if (result != null) {
+            return result;
+        }
+        synchronized (DaoFactoryImpl.class) {
+            if (instance == null) {
+                instance = new DaoFactoryImpl();
+            }
+            return instance;
+        }
+    }
+
     @Override
     public DoctorDao getDoctorDao() {
         return DoctorDaoImpl.getInstance(ConnectionFactoryImpl.getInstance());

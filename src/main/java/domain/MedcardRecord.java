@@ -6,14 +6,14 @@ public class MedcardRecord {
     private final int id;
     private final int patientId;
     private final String procedure_type_name;
-    private boolean completion;
+    private String performer;
     private final String description;
 
-    public MedcardRecord(int id, int patientId, String procedure_type_name, boolean completion, String description) {
+    public MedcardRecord(int id, int patientId, String procedure_type_name, String performer, String description) {
         this.id = id;
         this.patientId = patientId;
         this.procedure_type_name = procedure_type_name;
-        this.completion = completion;
+        this.performer = performer;
         this.description = description;
     }
 
@@ -29,12 +29,12 @@ public class MedcardRecord {
         return procedure_type_name;
     }
 
-    public boolean getCompletion() {
-        return completion;
+    public String getPerformer() {
+        return performer;
     }
 
-    public void setCompletion(boolean completion) {
-        this.completion = completion;
+    public void setPerformer(String performer) {
+        this.performer = performer;
     }
 
     public String getDescription() {
@@ -46,12 +46,12 @@ public class MedcardRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MedcardRecord medcardRecord = (MedcardRecord) o;
-        return id == medcardRecord.id && patientId == medcardRecord.patientId && completion == medcardRecord.completion && procedure_type_name.equals(medcardRecord.procedure_type_name) && description.equals(medcardRecord.description);
+        return id == medcardRecord.id && patientId == medcardRecord.patientId && performer == medcardRecord.performer && procedure_type_name.equals(medcardRecord.procedure_type_name) && description.equals(medcardRecord.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, patientId, procedure_type_name, completion, description);
+        return Objects.hash(id, patientId, procedure_type_name, performer, description);
     }
 }
 

@@ -4,7 +4,6 @@ import domain.MedcardRecord;
 import model.dao.connection.ConnectionFactory;
 import model.dao.interfaces.MedcardRecordDao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,7 +40,7 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
             statement.setInt(1, medcardRecord.getId());
             statement.setInt(2, medcardRecord.getPatientId());
             statement.setString(3, medcardRecord.getProcedure_type_name());
-            statement.setBoolean(4, medcardRecord.getCompletion());
+            statement.setString(4, medcardRecord.getPerformer());
             statement.setString(5, medcardRecord.getDescription());
             result = statement.executeQuery().next();
         } catch (SQLException ex) {
@@ -78,10 +77,11 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
         return list;
     }
 
-    public boolean setCompletion(int medcardId, boolean completion) {
+    @Override
+    public boolean setPerformer(int medcardId, String performer) {
         boolean result = false;
-        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLMedcardRecord.UPDATE_COMPLETION.QUERY)) {
-            statement.setBoolean(1, completion);
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLMedcardRecord.UPDATE_PERFORMER.QUERY)) {
+            statement.setString(1, performer);
             statement.setInt(2, medcardId);
             result = statement.executeQuery().next();
         } catch (SQLException e) {
@@ -95,7 +95,7 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
                 rs.getInt("id"),
                 rs.getInt("patient_id"),
                 rs.getString("procedure_type_name"),
-                rs.getBoolean("completion"),
+                rs.getString("performer"),
                 rs.getString("description")
         );
     }
@@ -104,7 +104,7 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
         INSERT("INSERT INTO medcard VALUES ((?),(?),(?),(?),(?))"),
         GET("SELECT * FROM medcard WHERE id = (?)"),
         GET_ALL("SELECT * FROM medcard WHERE patient_id = (?)"),
-        UPDATE_COMPLETION("UPDATE medcard SET completion = (?) WHERE id = (?)");
+        UPDATE_PERFORMER("UPDATE medcard SET performer = (?) WHERE id = (?)");
         String QUERY;
 
         SQLMedcardRecord(String QUERY) {
