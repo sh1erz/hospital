@@ -1,6 +1,7 @@
 package model.dao.impl;
 
 import domain.MedcardRecord;
+import model.dao.connection.ConnectionFactory;
 import model.dao.interfaces.MedcardRecordDao;
 
 import java.sql.Connection;
@@ -12,16 +13,31 @@ import java.util.List;
 import java.util.Optional;
 
 public class MedcardRecordDaoImpl implements MedcardRecordDao {
-    private final Connection connection;
 
-    public MedcardRecordDaoImpl(Connection connection) {
-        this.connection = connection;
+    private final ConnectionFactory connectionFactory;
+    private static MedcardRecordDaoImpl instance;
+
+    private MedcardRecordDaoImpl(ConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
+
+    public static MedcardRecordDaoImpl getInstance(ConnectionFactory connectionFactory) {
+        MedcardRecordDaoImpl result = instance;
+        if (result != null) {
+            return result;
+        }
+        synchronized (MedcardRecordDaoImpl.class) {
+            if (instance == null) {
+                instance = new MedcardRecordDaoImpl(connectionFactory);
+            }
+            return instance;
+        }
     }
 
     @Override
     public boolean create(MedcardRecord medcardRecord) {
         boolean result = false;
-        try (PreparedStatement statement = connection.prepareStatement(PatientDaoImpl.SQLPatient.INSERT.QUERY)) {
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(PatientDaoImpl.SQLPatient.INSERT.QUERY)) {
             statement.setInt(1, medcardRecord.getId());
             statement.setInt(2, medcardRecord.getPatientId());
             statement.setString(3, medcardRecord.getProcedure_type_name());
@@ -36,7 +52,7 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
 
     @Override
     public Optional<MedcardRecord> get(Integer id) {
-        try (PreparedStatement statement = connection.prepareStatement(SQLMedcardRecord.GET.QUERY)) {
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLMedcardRecord.GET.QUERY)) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -50,7 +66,7 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
 
     public List<MedcardRecord> getPatientMedcardRecords(int patientId) {
         List<MedcardRecord> list = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQLMedcardRecord.GET_ALL.QUERY)) {
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLMedcardRecord.GET_ALL.QUERY)) {
             statement.setInt(1, patientId);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -64,7 +80,7 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
 
     public boolean setCompletion(int medcardId, boolean completion) {
         boolean result = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQLMedcardRecord.UPDATE_COMPLETION.QUERY)) {
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLMedcardRecord.UPDATE_COMPLETION.QUERY)) {
             statement.setBoolean(1, completion);
             statement.setInt(2, medcardId);
             result = statement.executeQuery().next();

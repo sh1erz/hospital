@@ -2,9 +2,10 @@ package model.dao.impl;
 
 import domain.Doctor;
 import domain.DoctorSpecialisation;
+import model.dao.connection.ConnectionFactory;
+import model.dao.connection.ConnectionFactoryImpl;
 import model.dao.interfaces.DoctorDao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,16 +15,30 @@ import java.util.Optional;
 
 public class DoctorDaoImpl implements DoctorDao {
 
-    private final Connection connection;
+    private final ConnectionFactory connectionFactory;
+    private static DoctorDaoImpl instance;
 
-    public DoctorDaoImpl(Connection connection) {
-        this.connection = connection;
+    private DoctorDaoImpl(ConnectionFactory connectionFactory) {
+        this.connectionFactory = connectionFactory;
+    }
+
+    public static DoctorDaoImpl getInstance(ConnectionFactory connectionFactory) {
+        DoctorDaoImpl result = instance;
+        if (result != null) {
+            return result;
+        }
+        synchronized (DoctorDaoImpl.class) {
+            if (instance == null) {
+                instance = new DoctorDaoImpl(connectionFactory);
+            }
+            return instance;
+        }
     }
 
     @Override
     public boolean create(Doctor doctor) {
         boolean result = false;
-        try (PreparedStatement statement = connection.prepareStatement(SQLDoctor.INSERT.QUERY)) {
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLDoctor.INSERT.QUERY)) {
             statement.setInt(1, doctor.getId());
             statement.setString(2, doctor.getName());
             statement.setString(3, doctor.getDoctorSpecialisationName().name());
@@ -36,7 +51,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
     @Override
     public Optional<Doctor> get(Integer id) {
-        try (PreparedStatement statement = connection.prepareStatement(SQLDoctor.GET.QUERY)) {
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLDoctor.GET.QUERY)) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -51,7 +66,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
     public List<Doctor> getAllDoctorsAlphabetically() {
         List<Doctor> list = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQLDoctor.GET_ALL.QUERY)) {
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLDoctor.GET_ALL.QUERY)) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 list.add(retrieveDoctor(rs));
@@ -64,7 +79,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
     public List<Doctor> getDoctorsBySpecialisation(DoctorSpecialisation ds) {
         List<Doctor> list = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQLDoctor.GET_BY_CATEGORY.QUERY)) {
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLDoctor.GET_BY_CATEGORY.QUERY)) {
             statement.setString(1, ds.name());
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -78,7 +93,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
     public List<Doctor> getDoctorsByPatientsAmount() {
         List<Doctor> list = new ArrayList<>();
-        try (PreparedStatement statement = connection.prepareStatement(SQLDoctor.GET_BY_PATIENTS.QUERY)) {
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLDoctor.GET_BY_PATIENTS.QUERY)) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 list.add(retrieveDoctor(rs));
