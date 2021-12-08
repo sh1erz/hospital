@@ -6,11 +6,13 @@ public class Doctor {
     private final int id;
     private final String name;
     private final DoctorSpecialisation doctorSpecialisationName;
+    private final String login;
 
-    public Doctor(int id, String name, DoctorSpecialisation doctorSpecialisationName) {
+    public Doctor(int id, String name, DoctorSpecialisation doctorSpecialisationName, String login) {
         this.id = id;
         this.name = name;
         this.doctorSpecialisationName = doctorSpecialisationName;
+        this.login = login;
     }
 
     public int getId() {
@@ -36,5 +38,9 @@ public class Doctor {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, doctorSpecialisationName);
+    }
+
+    public String getLogin() {
+        return login;
     }
 }

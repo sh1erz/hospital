@@ -41,6 +41,7 @@ public class DoctorDaoImpl implements DoctorDao {
             statement.setInt(1, doctor.getId());
             statement.setString(2, doctor.getName());
             statement.setString(3, doctor.getDoctorSpecialisationName().name());
+            statement.setString(4, doctor.getLogin());
             result = statement.executeQuery().next();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -103,16 +104,29 @@ public class DoctorDaoImpl implements DoctorDao {
         return list;
     }
 
+    public String getPassword(String login){
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLDoctor.GET_PASSWORD.QUERY)) {
+            statement.setString(1, login);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return rs.getString("password");
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return null;
+    }
+
     private Doctor retrieveDoctor(ResultSet rs) throws SQLException {
         return new Doctor(
                 rs.getInt("id"),
                 rs.getString("name"),
-                DoctorSpecialisation.valueOf(rs.getString("doctor_specialisation_name"))
-        );
+                DoctorSpecialisation.valueOf(rs.getString("doctor_specialisation_name")),
+                rs.getString("login"));
     }
 
     enum SQLDoctor {
-        INSERT("INSERT INTO doctor VALUES ((?),(?),(?))"),
+        INSERT("INSERT INTO doctor VALUES ((?),(?),(?),(?))"),
         GET("SELECT * FROM doctor WHERE id = (?)"),
         GET_ALL("SELECT * FROM doctor ORDER BY name"),
         GET_BY_CATEGORY("SELECT * FROM doctor WHERE doctor_specialisation_name = (?) ORDER BY name"),
@@ -121,7 +135,8 @@ public class DoctorDaoImpl implements DoctorDao {
                 "(SELECT count(*) FROM patient\n" +
                 "WHERE patient.doctor_id = doctor.id) as patients\n" +
                 "FROM hospital.doctor\n" +
-                "ORDER BY patients DESC;");
+                "ORDER BY patients DESC;"),
+        GET_PASSWORD("SELECT password FROM doctor WHERE login LIKE ?");
         String QUERY;
 
         SQLDoctor(String QUERY) {

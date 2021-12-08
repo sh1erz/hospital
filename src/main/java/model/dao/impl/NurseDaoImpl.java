@@ -1,12 +1,15 @@
 package model.dao.impl;
 
 import domain.Nurse;
+import domain.Patient;
 import model.dao.connection.ConnectionFactory;
 import model.dao.interfaces.NurseDao;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class NurseDaoImpl implements NurseDao {
@@ -45,7 +48,7 @@ public class NurseDaoImpl implements NurseDao {
 
     @Override
     public Optional<Nurse> get(Integer id) {
-        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(PatientDaoImpl.SQLPatient.GET.QUERY)) {
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLNurse.GET.QUERY)) {
             statement.setInt(1, id);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
@@ -55,6 +58,19 @@ public class NurseDaoImpl implements NurseDao {
             throwable.printStackTrace();
         }
         return Optional.empty();
+    }
+
+    public List<Nurse> getAllNurses() {
+        List<Nurse> list = new ArrayList<>();
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLNurse.GET_ALL.QUERY)) {
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(retrieveNurse(rs));
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return list;
     }
 
     private Nurse retrieveNurse(ResultSet rs) throws SQLException {
