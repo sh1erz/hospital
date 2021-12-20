@@ -63,6 +63,20 @@ public class DoctorDaoImpl implements DoctorDao {
         return Optional.empty();
     }
 
+    public Optional<Doctor> get(String login) {
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLDoctor.GET_BY_LOGIN.QUERY)) {
+            statement.setString(1, login);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                return Optional.of(retrieveDoctor(rs));
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+
 
     public List<Doctor> getAllDoctorsAlphabetically() {
         List<Doctor> list = new ArrayList<>();
@@ -128,6 +142,7 @@ public class DoctorDaoImpl implements DoctorDao {
     enum SQLDoctor {
         INSERT("INSERT INTO doctor VALUES ((?),(?),(?),(?))"),
         GET("SELECT * FROM doctor WHERE id = (?)"),
+        GET_BY_LOGIN("SELECT * FROM doctor WHERE login LIKE ?"),
         GET_ALL("SELECT * FROM doctor ORDER BY name"),
         GET_BY_CATEGORY("SELECT * FROM doctor WHERE doctor_specialisation_name = (?) ORDER BY name"),
         GET_BY_PATIENTS("USE hospital;\n" +

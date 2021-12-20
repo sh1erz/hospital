@@ -17,6 +17,8 @@ public class MainController extends HttpServlet {
         String commandName = req.getParameter("command");
         Command command = CommandList.valueOf(commandName).getCommand();
         String goTo = command.execute(req, resp);
-        req.getRequestDispatcher(goTo).forward(req, resp);
+        //req.getRequestDispatcher("/" + goTo).forward(req, resp);
+        String path = req.getContextPath() + goTo;
+        resp.sendRedirect(path);
     }
 }

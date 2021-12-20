@@ -20,8 +20,9 @@ public final class ConnectionFactoryImpl implements ConnectionFactory {
             String dbConnUrl = props.getProperty("db.conn.url");
             String dbUserName = props.getProperty("db.username");
             String dbPassword = props.getProperty("db.password");
+            Class.forName(props.getProperty("db.driver.class"));
             connection = DriverManager.getConnection(dbConnUrl, dbUserName, dbPassword);
-        } catch (SQLException | IOException throwable) {
+        } catch (SQLException | IOException | ClassNotFoundException throwable) {
             throwable.printStackTrace();
         }
     }
