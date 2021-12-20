@@ -4,7 +4,8 @@ public enum Attribute {
     USER_ADMIN("userAdmin"),
     USER_DOCTOR("userDoctor"),
     DOCTORS("doctors"),
-    PATIENTS("patients");
+    PATIENTS("patients"),
+    DOC_SPECIALISATION("specialisations");
 
 
     private final String attribute;

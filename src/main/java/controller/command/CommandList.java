@@ -1,5 +1,6 @@
 package controller.command;
 
+import controller.command.impl.AddDoctorCommand;
 import controller.command.impl.AddPatientCommand;
 import controller.command.impl.AuthorizeCommand;
 
@@ -7,7 +8,7 @@ public enum CommandList {
 
     AUTHORISATION(new AuthorizeCommand()),
     ADD_PATIENT(new AddPatientCommand()),
-    ADD_DOCTOR(new AddPatientCommand());
+    ADD_DOCTOR(new AddDoctorCommand());
 
 
 
@@ -15,7 +16,7 @@ public enum CommandList {
         this.command = command;
     }
 
-    private Command command;
+    private final Command command;
 
 
     public Command getCommand(){

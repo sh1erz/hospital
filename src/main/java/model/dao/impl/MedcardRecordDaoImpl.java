@@ -42,7 +42,8 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
             statement.setString(3, medcardRecord.getProcedure_type_name());
             statement.setString(4, medcardRecord.getPerformer());
             statement.setString(5, medcardRecord.getDescription());
-            result = statement.executeQuery().next();
+            statement.executeUpdate();
+            result = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -83,7 +84,8 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
         try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLMedcardRecord.UPDATE_PERFORMER.QUERY)) {
             statement.setString(1, performer);
             statement.setInt(2, medcardId);
-            result = statement.executeQuery().next();
+            statement.executeUpdate();
+            result = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -105,7 +107,7 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
         GET("SELECT * FROM medcard WHERE id = (?)"),
         GET_ALL("SELECT * FROM medcard WHERE patient_id = (?)"),
         UPDATE_PERFORMER("UPDATE medcard SET performer = (?) WHERE id = (?)");
-        String QUERY;
+        final String QUERY;
 
         SQLMedcardRecord(String QUERY) {
             this.QUERY = QUERY;

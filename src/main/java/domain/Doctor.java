@@ -7,12 +7,14 @@ public class Doctor {
     private final String name;
     private final DoctorSpecialisation doctorSpecialisationName;
     private final String login;
+    private final String password;
 
-    public Doctor(int id, String name, DoctorSpecialisation doctorSpecialisationName, String login) {
+    public Doctor(int id, String name, DoctorSpecialisation doctorSpecialisationName, String login, String password) {
         this.id = id;
         this.name = name;
         this.doctorSpecialisationName = doctorSpecialisationName;
         this.login = login;
+        this.password = password;
     }
 
     public int getId() {
@@ -42,5 +44,9 @@ public class Doctor {
 
     public String getLogin() {
         return login;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

@@ -38,11 +38,12 @@ public class DoctorDaoImpl implements DoctorDao {
     public boolean create(Doctor doctor) {
         boolean result = false;
         try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLDoctor.INSERT.QUERY)) {
-            statement.setInt(1, doctor.getId());
-            statement.setString(2, doctor.getName());
-            statement.setString(3, doctor.getDoctorSpecialisationName().name());
-            statement.setString(4, doctor.getLogin());
-            result = statement.executeQuery().next();
+            statement.setString(1, doctor.getName());
+            statement.setString(2, doctor.getDoctorSpecialisationName().name());
+            statement.setString(3, doctor.getLogin());
+            statement.setString(4, doctor.getPassword());
+            statement.executeUpdate();
+            result = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -75,7 +76,6 @@ public class DoctorDaoImpl implements DoctorDao {
         }
         return Optional.empty();
     }
-
 
 
     public List<Doctor> getAllDoctorsAlphabetically() {
@@ -118,7 +118,7 @@ public class DoctorDaoImpl implements DoctorDao {
         return list;
     }
 
-    public String getPassword(String login){
+    public String getPassword(String login) {
         try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLDoctor.GET_PASSWORD.QUERY)) {
             statement.setString(1, login);
             ResultSet rs = statement.executeQuery();
@@ -136,11 +136,12 @@ public class DoctorDaoImpl implements DoctorDao {
                 rs.getInt("id"),
                 rs.getString("name"),
                 DoctorSpecialisation.valueOf(rs.getString("doctor_specialisation_name")),
-                rs.getString("login"));
+                rs.getString("login"),
+                rs.getString("password"));
     }
 
     enum SQLDoctor {
-        INSERT("INSERT INTO doctor VALUES ((?),(?),(?),(?))"),
+        INSERT("INSERT INTO doctor (name,doctor_specialisation_name,login,password) VALUES (?,?,?,?)"),
         GET("SELECT * FROM doctor WHERE id = (?)"),
         GET_BY_LOGIN("SELECT * FROM doctor WHERE login LIKE ?"),
         GET_ALL("SELECT * FROM doctor ORDER BY name"),
@@ -152,7 +153,7 @@ public class DoctorDaoImpl implements DoctorDao {
                 "FROM hospital.doctor\n" +
                 "ORDER BY patients DESC;"),
         GET_PASSWORD("SELECT password FROM doctor WHERE login LIKE ?");
-        String QUERY;
+        final String QUERY;
 
         SQLDoctor(String QUERY) {
             this.QUERY = QUERY;

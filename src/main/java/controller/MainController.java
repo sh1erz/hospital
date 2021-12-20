@@ -21,4 +21,5 @@ public class MainController extends HttpServlet {
         String path = req.getContextPath() + goTo;
         resp.sendRedirect(path);
     }
+
 }

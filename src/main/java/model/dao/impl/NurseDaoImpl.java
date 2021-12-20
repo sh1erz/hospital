@@ -1,7 +1,6 @@
 package model.dao.impl;
 
 import domain.Nurse;
-import domain.Patient;
 import model.dao.connection.ConnectionFactory;
 import model.dao.interfaces.NurseDao;
 
@@ -39,7 +38,8 @@ public class NurseDaoImpl implements NurseDao {
         try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLNurse.INSERT.QUERY)) {
             statement.setInt(1, nurse.getId());
             statement.setString(2, nurse.getName());
-            result = statement.executeQuery().next();
+            statement.executeUpdate();
+            result = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -84,7 +84,7 @@ public class NurseDaoImpl implements NurseDao {
         INSERT("INSERT INTO nurse VALUES ((?),(?))"),
         GET("SELECT * FROM nurse WHERE id = (?)"),
         GET_ALL("SELECT * FROM nurse ORDER BY name");
-        String QUERY;
+        final String QUERY;
 
         SQLNurse(String QUERY) {
             this.QUERY = QUERY;

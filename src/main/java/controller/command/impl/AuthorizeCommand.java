@@ -30,7 +30,7 @@ public class AuthorizeCommand implements Command {
             case "admin": {
                 if (isAdminValid(login, p)) {
                     req.getSession().setAttribute("adminUser", "admin");
-                    setAdminAttributes(req);
+                    //setAdminAttributes(req);
                     return ViewJsp.ADMIN_MAIN.getPage();
                 }
                 return ViewJsp.INVALID_LOGIN.getPage();
@@ -47,16 +47,6 @@ public class AuthorizeCommand implements Command {
                 throw new InvalidUserTypeException();
         }
 
-    }
-
-    private void setAdminAttributes(HttpServletRequest req) {
-        PatientDao patientDao = daoFactory.getPatientDao();
-        Patient[] patient = patientDao.getAllPatientsAlphabetically().toArray(new Patient[0]);
-        req.getSession().setAttribute(PATIENTS.getAttribute(), patient);
-
-        DoctorDao doctorDao = daoFactory.getDoctorDao();
-        Doctor[] doctors = doctorDao.getAllDoctorsAlphabetically().toArray(new Doctor[0]);
-        req.getSession().setAttribute(DOCTORS.getAttribute(), doctors);
     }
 
     private boolean isAdminValid(String login, String password) {

@@ -38,11 +38,11 @@ public class PatientDaoImpl implements PatientDao {
     public boolean create(Patient patient) {
         boolean result = false;
         try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLPatient.INSERT.QUERY)) {
-            statement.setInt(1, patient.getId());
-            statement.setString(2, patient.getName());
-            statement.setDate(3, new Date(patient.getBirth().getTime()));
-            statement.setInt(4, patient.getDoctorId());
-            result = statement.executeQuery().next();
+            statement.setString(1, patient.getName());
+            statement.setDate(2, new Date(patient.getBirth().getTime()));
+            statement.setInt(3, patient.getDoctorId());
+            statement.executeUpdate();
+            result = true;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -99,7 +99,8 @@ public class PatientDaoImpl implements PatientDao {
         try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLPatient.UPDATE_DIAGNOSIS.QUERY)) {
             statement.setString(1, diagnosis);
             statement.setInt(2, patientId);
-            result = statement.executeQuery().next();
+            statement.executeUpdate();
+            result = true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -117,12 +118,12 @@ public class PatientDaoImpl implements PatientDao {
 
 
     enum SQLPatient {
-        INSERT("INSERT INTO patient VALUES ((?),(?),(?),(?))"),
+        INSERT("INSERT INTO patient (name,birth,doctor_id) VALUES (?,?,?)"),
         GET("SELECT * FROM patient WHERE id = (?)"),
         GET_ALL("SELECT * FROM patient ORDER BY name"),
         GET_BY_BIRTH("SELECT * FROM patient ORDER BY birth (?)"),
         UPDATE_DIAGNOSIS("UPDATE patient SET diagnosis = (?) WHERE id = (?)");
-        String QUERY;
+        final String QUERY;
 
         SQLPatient(String QUERY) {
             this.QUERY = QUERY;
