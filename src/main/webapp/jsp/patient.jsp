@@ -40,6 +40,7 @@
                 <td>${record.description}</td>
                 <td>
                     <select name="performer${loop.index}">
+                        <option value=""></option>
                         <c:forEach items="${doctors}" var="doctor">
                             <option value="${doctor.name}">${doctor.name} ${doctor.doctorSpecialisationName}</option>
                         </c:forEach>

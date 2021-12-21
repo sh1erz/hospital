@@ -30,8 +30,7 @@ public class SetPerformerCommand implements Command {
                 }
             }
         }
-        String c = req.getContextPath();
-        return c;
+        return Page.PATIENT.getPage();
     }
 
     private boolean updatePerformer(int recordId, String performer) {
