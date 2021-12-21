@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static controller.util.constants.Attribute.USER_ADMIN;
+import static controller.util.constants.Attribute.USER_DOCTOR;
+
 @WebFilter("/index.jsp")
 public class LoginFilter implements Filter {
     @Override
@@ -20,12 +23,11 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-        if (session.getAttribute("doctorUser") != null){
+        if (session.getAttribute(USER_DOCTOR.getAttribute()) != null){
             dispatcher = servletRequest.getRequestDispatcher(Page.DOCTOR_MAIN.getPage());
             dispatcher.forward(servletRequest, servletResponse);
-        }else if (session.getAttribute("doctorUser") != null){
-            dispatcher = servletRequest.getRequestDispatcher(Page.DOCTOR_MAIN.getPage());
-
+        }else if (session.getAttribute(USER_ADMIN.getAttribute()) != null){
+            dispatcher = servletRequest.getRequestDispatcher(Page.ADMIN_MAIN.getPage());
         }else {
             filterChain.doFilter(servletRequest, servletResponse);
             return;

@@ -39,7 +39,7 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
         boolean result = false;
         try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(PatientDaoImpl.SQLPatient.INSERT.QUERY)) {
             statement.setInt(1, medcardRecord.getPatientId());
-            statement.setString(2, medcardRecord.getProcedure_type_name().name());
+            statement.setString(2, medcardRecord.getProcedureType().name());
             statement.setString(3, medcardRecord.getDescription());
             statement.executeUpdate();
             result = true;

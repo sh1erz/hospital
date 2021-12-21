@@ -1,15 +1,4 @@
-<%@ page import="domain.Patient" %>
-<%@ page import="java.util.List" %>
-<%@ page import="static controller.util.constants.Attribute.PATIENTS" %>
-<%@ page import="domain.DoctorSpecialisation" %>
 <%@ page import="controller.command.CommandList" %>
-<%@ page import="model.dao.interfaces.PatientDao" %>
-<%@ page import="model.dao.interfaces.DoctorDao" %>
-<%@ page import="domain.Doctor" %>
-<%@ page import="static controller.util.constants.Attribute.DOCTORS" %>
-<%@ page import="model.dao.interfaces.DaoFactory" %>
-<%@ page import="model.dao.impl.DaoFactoryImpl" %>
-<%@ page import="static controller.util.constants.Attribute.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -17,18 +6,7 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
 <body>
-
 <input type="hidden" name="command" value="view">
-<%
-    DaoFactory daoFactory = DaoFactoryImpl.getInstance();
-    PatientDao patientDao = daoFactory.getPatientDao();
-    List<Patient> patient = patientDao.getAllPatientsAlphabetically();
-    request.setAttribute(PATIENTS.getAttribute(), patient);
-    DoctorDao doctorDao = daoFactory.getDoctorDao();
-    List<Doctor> doctors = doctorDao.getAllDoctorsAlphabetically();
-    request.getSession().setAttribute(DOCTORS.getAttribute(), doctors);
-    request.setAttribute(DOC_SPECIALISATION.getAttribute(), DoctorSpecialisation.values());
-%>
 <table border="1">
     <thead>
     <tr>

@@ -41,7 +41,7 @@
         <servlet-name>invalid_person.jsp</servlet-name>
         <url-pattern>/invalid_person</url-pattern>
     </servlet-mapping>
-    <servlet>
+<!--    <servlet>
         <servlet-name>admin_main</servlet-name>
         <jsp-file>/jsp/admin_main.jsp</jsp-file>
     </servlet>
@@ -56,7 +56,7 @@
     <servlet-mapping>
         <servlet-name>doctor_main</servlet-name>
         <url-pattern>/doctor/doctor_main</url-pattern>
-    </servlet-mapping>
+    </servlet-mapping>-->
    <!-- <servlet>
         <servlet-name>patient</servlet-name>
         <jsp-file>/jsp/patient.jsp</jsp-file>

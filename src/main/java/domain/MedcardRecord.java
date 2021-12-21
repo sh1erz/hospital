@@ -5,22 +5,22 @@ import java.util.Objects;
 public class MedcardRecord {
     private final int id;
     private final int patientId;
-    private final ProcedureType procedure_type_name;
+    private final ProcedureType procedureType;
     private String performer;
     private final String description;
 
-    public MedcardRecord(int id, int patientId, ProcedureType procedure_type_name, String performer, String description) {
+    public MedcardRecord(int id, int patientId, ProcedureType procedureType, String performer, String description) {
         this.id = id;
         this.patientId = patientId;
-        this.procedure_type_name = procedure_type_name;
+        this.procedureType = procedureType;
         this.performer = performer;
         this.description = description;
     }
 
-    public MedcardRecord(int id, int patientId, ProcedureType procedure_type_name, String description) {
+    public MedcardRecord(int id, int patientId, ProcedureType procedureType, String description) {
         this.id = id;
         this.patientId = patientId;
-        this.procedure_type_name = procedure_type_name;
+        this.procedureType = procedureType;
         this.description = description;
     }
 
@@ -32,8 +32,8 @@ public class MedcardRecord {
         return patientId;
     }
 
-    public ProcedureType getProcedure_type_name() {
-        return procedure_type_name;
+    public ProcedureType getProcedureType() {
+        return procedureType;
     }
 
     public String getPerformer() {
@@ -53,12 +53,12 @@ public class MedcardRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MedcardRecord medcardRecord = (MedcardRecord) o;
-        return id == medcardRecord.id && patientId == medcardRecord.patientId && Objects.equals(performer, medcardRecord.performer) && procedure_type_name.equals(medcardRecord.procedure_type_name) && description.equals(medcardRecord.description);
+        return id == medcardRecord.id && patientId == medcardRecord.patientId && Objects.equals(performer, medcardRecord.performer) && procedureType.equals(medcardRecord.procedureType) && description.equals(medcardRecord.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, patientId, procedure_type_name, performer, description);
+        return Objects.hash(id, patientId, procedureType, performer, description);
     }
 }
 
