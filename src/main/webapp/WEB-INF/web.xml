@@ -41,6 +41,14 @@
         <servlet-name>invalid_person.jsp</servlet-name>
         <url-pattern>/invalid_person</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>error</servlet-name>
+        <jsp-file>/jsp/error.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>error</servlet-name>
+        <url-pattern>/error</url-pattern>
+    </servlet-mapping>
 <!--    <servlet>
         <servlet-name>admin_main</servlet-name>
         <jsp-file>/jsp/admin_main.jsp</jsp-file>

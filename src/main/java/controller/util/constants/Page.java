@@ -6,7 +6,8 @@ public enum Page {
     INVALID_PERSON("/invalid_person"),
     DOCTOR_MAIN("/doctor/main"),
     ADMIN_MAIN("/admin/main"),
-    PATIENT("/doctor/patient");
+    PATIENT("/doctor/patient"),
+    ERROR("/error");
 
 
     private final String page;

@@ -5,8 +5,10 @@ public enum Attribute {
     USER_DOCTOR("userDoctor"),
     DOCTORS("doctors"),
     PATIENTS("patients"),
+    NURSES("nurses"),
     DOC_SPECIALISATION("specialisations"),
     PATIENT("patient"),
+    ERROR("error"),
     PATIENT_RECORDS("records");
 
 

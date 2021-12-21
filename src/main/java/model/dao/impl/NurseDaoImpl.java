@@ -60,7 +60,7 @@ public class NurseDaoImpl implements NurseDao {
         return Optional.empty();
     }
 
-    public List<Nurse> getAllNurses() {
+    public List<Nurse> getAll() {
         List<Nurse> list = new ArrayList<>();
         try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLNurse.GET_ALL.QUERY)) {
             ResultSet rs = statement.executeQuery();

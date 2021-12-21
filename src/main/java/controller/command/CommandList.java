@@ -1,16 +1,16 @@
 package controller.command;
 
-import controller.command.impl.AddDoctorCommand;
-import controller.command.impl.AddPatientCommand;
-import controller.command.impl.AuthorizeCommand;
-import controller.command.impl.ChoosePatientCommand;
+import controller.command.impl.*;
 
 public enum CommandList {
 
     AUTHORISATION(new AuthorizeCommand()),
     ADD_PATIENT(new AddPatientCommand()),
     ADD_DOCTOR(new AddDoctorCommand()),
-    CHOOSE_PATIENT(new ChoosePatientCommand());
+    ADD_MEDCARD_RECORD(new AddMedcardRecordCommand()),
+    SET_DIAGNOSIS(new SetDiagnosisCommand()),
+    CHOOSE_PATIENT(new ChoosePatientCommand()),
+    SET_PERFORMER(new SetPerformerCommand());
 
 
 
