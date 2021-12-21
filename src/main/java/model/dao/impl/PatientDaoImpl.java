@@ -127,7 +127,8 @@ public class PatientDaoImpl implements PatientDao {
                 rs.getInt("id"),
                 rs.getString("name"),
                 new java.util.Date(rs.getDate("birth").getTime()),
-                rs.getInt("doctor_id")
+                rs.getInt("doctor_id"),
+                rs.getString("diagnosis")
         );
     }
 

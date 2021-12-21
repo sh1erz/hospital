@@ -19,8 +19,7 @@
         <input type="text" name="diagnosis"/>
     </label>
     <input type="submit"/>
-</form>
-
+</form><br>
 
 <table border="1">
     <thead>

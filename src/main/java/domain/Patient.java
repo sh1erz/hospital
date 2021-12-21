@@ -18,6 +18,14 @@ public class Patient {
         this.doctorId = doctorId;
     }
 
+    public Patient(int id, String name, Date birth, int doctorId, String diagnosis) {
+        this.id = id;
+        this.name = name;
+        this.birth = birth;
+        this.doctorId = doctorId;
+        this.diagnosis = diagnosis;
+    }
+
     public int getId() {
         return id;
     }
