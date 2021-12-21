@@ -63,6 +63,21 @@ public class PatientDaoImpl implements PatientDao {
         return Optional.empty();
     }
 
+    @Override
+    public List<Patient> getAllDoctorPatients(int doctorId) {
+        List<Patient> list = new ArrayList<>();
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLPatient.GET_BY_DOCTOR.QUERY)) {
+            statement.setInt(1, doctorId);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                list.add(retrievePatient(rs));
+            }
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
+        return list;
+    }
+
     public List<Patient> getAllPatientsAlphabetically() {
         List<Patient> list = new ArrayList<>();
         try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLPatient.GET_ALL.QUERY)) {
@@ -120,6 +135,7 @@ public class PatientDaoImpl implements PatientDao {
     enum SQLPatient {
         INSERT("INSERT INTO patient (name,birth,doctor_id) VALUES (?,?,?)"),
         GET("SELECT * FROM patient WHERE id = (?)"),
+        GET_BY_DOCTOR("SELECT * FROM patient WHERE doctor_id = (?)"),
         GET_ALL("SELECT * FROM patient ORDER BY name"),
         GET_BY_BIRTH("SELECT * FROM patient ORDER BY birth (?)"),
         UPDATE_DIAGNOSIS("UPDATE patient SET diagnosis = (?) WHERE id = (?)");

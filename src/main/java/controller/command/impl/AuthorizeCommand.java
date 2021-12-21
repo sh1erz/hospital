@@ -14,8 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static controller.util.constants.Attribute.DOCTORS;
-import static controller.util.constants.Attribute.PATIENTS;
+import static controller.util.constants.Attribute.*;
 
 public class AuthorizeCommand implements Command {
     private final DaoFactory daoFactory = DaoFactoryImpl.getInstance();
@@ -29,7 +28,7 @@ public class AuthorizeCommand implements Command {
         switch (userType) {
             case "admin": {
                 if (isAdminValid(login, p)) {
-                    req.getSession().setAttribute("adminUser", "admin");
+                    req.getSession().setAttribute(USER_ADMIN.getAttribute(), "admin");
                     //setAdminAttributes(req);
                     return ViewJsp.ADMIN_MAIN.getPage();
                 }
@@ -37,8 +36,8 @@ public class AuthorizeCommand implements Command {
             }
             case "doctor": {
                 if (isDoctorValid(login, p)) {
-                    req.getSession().setAttribute("doctorUser", login);
-
+                    Doctor doctor = daoFactory.getDoctorDao().get(login).orElseThrow();
+                    req.getSession().setAttribute(USER_DOCTOR.getAttribute(), doctor);
                     return ViewJsp.DOCTOR_MAIN.getPage();
                 }
                 return ViewJsp.INVALID_LOGIN.getPage();

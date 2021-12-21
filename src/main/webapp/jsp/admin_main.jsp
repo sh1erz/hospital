@@ -22,10 +22,10 @@
 <%
     DaoFactory daoFactory = DaoFactoryImpl.getInstance();
     PatientDao patientDao = daoFactory.getPatientDao();
-    Patient[] patient = patientDao.getAllPatientsAlphabetically().toArray(new Patient[0]);
+    List<Patient> patient = patientDao.getAllPatientsAlphabetically();
     request.setAttribute(PATIENTS.getAttribute(), patient);
     DoctorDao doctorDao = daoFactory.getDoctorDao();
-    Doctor[] doctors = doctorDao.getAllDoctorsAlphabetically().toArray(new Doctor[0]);
+    List<Doctor> doctors = doctorDao.getAllDoctorsAlphabetically();
     request.getSession().setAttribute(DOCTORS.getAttribute(), doctors);
     request.setAttribute(DOC_SPECIALISATION.getAttribute(), DoctorSpecialisation.values());
 %>

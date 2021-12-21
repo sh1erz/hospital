@@ -37,11 +37,9 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
     public boolean create(MedcardRecord medcardRecord) {
         boolean result = false;
         try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(PatientDaoImpl.SQLPatient.INSERT.QUERY)) {
-            statement.setInt(1, medcardRecord.getId());
-            statement.setInt(2, medcardRecord.getPatientId());
-            statement.setString(3, medcardRecord.getProcedure_type_name());
-            statement.setString(4, medcardRecord.getPerformer());
-            statement.setString(5, medcardRecord.getDescription());
+            statement.setInt(1, medcardRecord.getPatientId());
+            statement.setString(2, medcardRecord.getProcedure_type_name());
+            statement.setString(3, medcardRecord.getDescription());
             statement.executeUpdate();
             result = true;
         } catch (SQLException ex) {
@@ -103,7 +101,7 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
     }
 
     enum SQLMedcardRecord {
-        INSERT("INSERT INTO medcard VALUES ((?),(?),(?),(?),(?))"),
+        INSERT("INSERT INTO medcard (patient_id,procedure_type_name,description) VALUES (?,?,?)"),
         GET("SELECT * FROM medcard WHERE id = (?)"),
         GET_ALL("SELECT * FROM medcard WHERE patient_id = (?)"),
         UPDATE_PERFORMER("UPDATE medcard SET performer = (?) WHERE id = (?)");

@@ -17,6 +17,13 @@ public class MedcardRecord {
         this.description = description;
     }
 
+    public MedcardRecord(int id, int patientId, String procedure_type_name, String description) {
+        this.id = id;
+        this.patientId = patientId;
+        this.procedure_type_name = procedure_type_name;
+        this.description = description;
+    }
+
     public int getId() {
         return id;
     }
@@ -46,7 +53,7 @@ public class MedcardRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MedcardRecord medcardRecord = (MedcardRecord) o;
-        return id == medcardRecord.id && patientId == medcardRecord.patientId && performer == medcardRecord.performer && procedure_type_name.equals(medcardRecord.procedure_type_name) && description.equals(medcardRecord.description);
+        return id == medcardRecord.id && patientId == medcardRecord.patientId && Objects.equals(performer, medcardRecord.performer) && procedure_type_name.equals(medcardRecord.procedure_type_name) && description.equals(medcardRecord.description);
     }
 
     @Override

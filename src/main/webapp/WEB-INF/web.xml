@@ -49,7 +49,14 @@
         <servlet-name>admin_main</servlet-name>
         <url-pattern>/admin/admin_main</url-pattern>
     </servlet-mapping>
-
+    <servlet>
+        <servlet-name>doctor_main</servlet-name>
+        <jsp-file>/jsp/doctor_main.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>doctor_main</servlet-name>
+        <url-pattern>/doctor/doctor_main</url-pattern>
+    </servlet-mapping>
 
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
