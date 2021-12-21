@@ -1,7 +1,7 @@
 package controller.command.impl;
 
 import controller.command.Command;
-import controller.util.constants.ViewJsp;
+import controller.util.constants.Page;
 import domain.Patient;
 import model.dao.impl.DaoFactoryImpl;
 import model.dao.interfaces.DaoFactory;
@@ -9,7 +9,6 @@ import model.dao.interfaces.PatientDao;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,9 +31,9 @@ public class AddPatientCommand implements Command {
         }
         int doctorId = Integer.parseInt(req.getParameter("doctor"));
         if(addPatient(new Patient(-1, name, birth, doctorId))){
-            return ViewJsp.ADMIN_MAIN.getPage();
+            return Page.ADMIN_MAIN.getPage();
         }
-        return ViewJsp.INVALID_PERSON.getPage();
+        return Page.INVALID_PERSON.getPage();
     }
 
     private boolean addPatient(Patient patient) {

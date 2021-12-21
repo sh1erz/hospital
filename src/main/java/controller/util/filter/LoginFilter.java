@@ -1,6 +1,6 @@
 package controller.util.filter;
 
-import controller.util.constants.ViewJsp;
+import controller.util.constants.Page;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -21,10 +21,10 @@ public class LoginFilter implements Filter {
             return;
         }
         if (session.getAttribute("doctorUser") != null){
-            dispatcher = servletRequest.getRequestDispatcher(ViewJsp.DOCTOR_MAIN.getPage());
+            dispatcher = servletRequest.getRequestDispatcher(Page.DOCTOR_MAIN.getPage());
             dispatcher.forward(servletRequest, servletResponse);
         }else if (session.getAttribute("doctorUser") != null){
-            dispatcher = servletRequest.getRequestDispatcher(ViewJsp.DOCTOR_MAIN.getPage());
+            dispatcher = servletRequest.getRequestDispatcher(Page.DOCTOR_MAIN.getPage());
 
         }else {
             filterChain.doFilter(servletRequest, servletResponse);

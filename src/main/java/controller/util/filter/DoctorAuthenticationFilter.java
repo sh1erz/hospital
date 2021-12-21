@@ -1,6 +1,6 @@
 package controller.util.filter;
 
-import controller.util.constants.ViewJsp;
+import controller.util.constants.Page;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -21,7 +21,7 @@ public class DoctorAuthenticationFilter implements Filter {
         if (isLoggedIn) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            RequestDispatcher dispatcher = httpRequest.getRequestDispatcher(ViewJsp.INDEX.getPage());
+            RequestDispatcher dispatcher = httpRequest.getRequestDispatcher(Page.INDEX.getPage());
             dispatcher.forward(servletRequest, servletResponse);
         }
     }

@@ -1,7 +1,7 @@
 package controller.command.impl;
 
 import controller.command.Command;
-import controller.util.constants.ViewJsp;
+import controller.util.constants.Page;
 import domain.Doctor;
 import domain.DoctorSpecialisation;
 import model.dao.impl.DaoFactoryImpl;
@@ -22,7 +22,7 @@ public class AddDoctorCommand implements Command {
         DoctorSpecialisation specialisation = DoctorSpecialisation.valueOf(req.getParameter("specialisation"));
         Doctor doctor = new Doctor(-1, name, specialisation, login, password);
         DoctorDao doctorDao = daoFactory.getDoctorDao();
-        if (doctorDao.create(doctor)) return ViewJsp.ADMIN_MAIN.getPage();
-        return ViewJsp.INVALID_PERSON.getPage();
+        if (doctorDao.create(doctor)) return Page.ADMIN_MAIN.getPage();
+        return Page.INVALID_PERSON.getPage();
     }
 }

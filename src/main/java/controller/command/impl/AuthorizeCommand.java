@@ -1,13 +1,11 @@
 package controller.command.impl;
 
 import controller.command.Command;
-import controller.util.constants.ViewJsp;
+import controller.util.constants.Page;
 import domain.Doctor;
-import domain.Patient;
 import model.dao.impl.DaoFactoryImpl;
 import model.dao.interfaces.DaoFactory;
 import model.dao.interfaces.DoctorDao;
-import model.dao.interfaces.PatientDao;
 import model.exceptions.InvalidUserTypeException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,17 +28,17 @@ public class AuthorizeCommand implements Command {
                 if (isAdminValid(login, p)) {
                     req.getSession().setAttribute(USER_ADMIN.getAttribute(), "admin");
                     //setAdminAttributes(req);
-                    return ViewJsp.ADMIN_MAIN.getPage();
+                    return Page.ADMIN_MAIN.getPage();
                 }
-                return ViewJsp.INVALID_LOGIN.getPage();
+                return Page.INVALID_LOGIN.getPage();
             }
             case "doctor": {
                 if (isDoctorValid(login, p)) {
                     Doctor doctor = daoFactory.getDoctorDao().get(login).orElseThrow();
                     req.getSession().setAttribute(USER_DOCTOR.getAttribute(), doctor);
-                    return ViewJsp.DOCTOR_MAIN.getPage();
+                    return Page.DOCTOR_MAIN.getPage();
                 }
-                return ViewJsp.INVALID_LOGIN.getPage();
+                return Page.INVALID_LOGIN.getPage();
             }
             default:
                 throw new InvalidUserTypeException();
