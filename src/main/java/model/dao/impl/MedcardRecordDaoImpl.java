@@ -1,6 +1,7 @@
 package model.dao.impl;
 
 import domain.MedcardRecord;
+import domain.ProcedureType;
 import model.dao.connection.ConnectionFactory;
 import model.dao.interfaces.MedcardRecordDao;
 
@@ -38,7 +39,7 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
         boolean result = false;
         try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(PatientDaoImpl.SQLPatient.INSERT.QUERY)) {
             statement.setInt(1, medcardRecord.getPatientId());
-            statement.setString(2, medcardRecord.getProcedure_type_name());
+            statement.setString(2, medcardRecord.getProcedure_type_name().name());
             statement.setString(3, medcardRecord.getDescription());
             statement.executeUpdate();
             result = true;
@@ -94,7 +95,7 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
         return new MedcardRecord(
                 rs.getInt("id"),
                 rs.getInt("patient_id"),
-                rs.getString("procedure_type_name"),
+                ProcedureType.valueOf(rs.getString("procedure_type_name")),
                 rs.getString("performer"),
                 rs.getString("description")
         );

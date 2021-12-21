@@ -5,11 +5,11 @@ import java.util.Objects;
 public class MedcardRecord {
     private final int id;
     private final int patientId;
-    private final String procedure_type_name;
+    private final ProcedureType procedure_type_name;
     private String performer;
     private final String description;
 
-    public MedcardRecord(int id, int patientId, String procedure_type_name, String performer, String description) {
+    public MedcardRecord(int id, int patientId, ProcedureType procedure_type_name, String performer, String description) {
         this.id = id;
         this.patientId = patientId;
         this.procedure_type_name = procedure_type_name;
@@ -17,7 +17,7 @@ public class MedcardRecord {
         this.description = description;
     }
 
-    public MedcardRecord(int id, int patientId, String procedure_type_name, String description) {
+    public MedcardRecord(int id, int patientId, ProcedureType procedure_type_name, String description) {
         this.id = id;
         this.patientId = patientId;
         this.procedure_type_name = procedure_type_name;
@@ -32,7 +32,7 @@ public class MedcardRecord {
         return patientId;
     }
 
-    public String getProcedure_type_name() {
+    public ProcedureType getProcedure_type_name() {
         return procedure_type_name;
     }
 
