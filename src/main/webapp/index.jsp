@@ -1,5 +1,6 @@
 <%@ page import="controller.command.CommandList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page session="false" %>
 <html>
 <head>
     <title>Login</title>
@@ -13,7 +14,7 @@
         <input type="radio" name="accountType" value="admin">
     </label>Admin<br>
     <label>
-        <input type="radio" name="accountType" value="doctor">
+        <input type="radio" name="accountType" value="doctor" checked>
     </label>Doctor<br>
 
     <label>Login:

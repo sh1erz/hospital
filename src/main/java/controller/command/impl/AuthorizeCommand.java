@@ -2,6 +2,8 @@ package controller.command.impl;
 
 import controller.command.Command;
 import controller.util.constants.Page;
+import controller.util.constants.SortDoctor;
+import controller.util.constants.SortPatient;
 import domain.Doctor;
 import model.dao.impl.DaoFactoryImpl;
 import model.dao.interfaces.DaoFactory;
@@ -26,8 +28,8 @@ public class AuthorizeCommand implements Command {
         switch (userType) {
             case "admin": {
                 if (isAdminValid(login, p)) {
-                    req.getSession().setAttribute(USER_ADMIN.getAttribute(), "admin");
-                    //setAdminAttributes(req);
+                    req.getSession(true).setAttribute(USER_ADMIN.getAttribute(), "admin");
+                    putAttributes(req);
                     return Page.ADMIN_MAIN.getPage();
                 }
                 return Page.INVALID_LOGIN.getPage();
@@ -35,13 +37,14 @@ public class AuthorizeCommand implements Command {
             case "doctor": {
                 if (isDoctorValid(login, p)) {
                     Doctor doctor = daoFactory.getDoctorDao().get(login).orElseThrow();
-                    req.getSession().setAttribute(USER_DOCTOR.getAttribute(), doctor);
+                    req.getSession(true).setAttribute(USER_DOCTOR.getAttribute(), doctor);
+                    putAttributes(req);
                     return Page.DOCTOR_MAIN.getPage();
                 }
                 return Page.INVALID_LOGIN.getPage();
             }
             default:
-                throw new InvalidUserTypeException();
+                throw new InvalidUserTypeException("userType is incorrect");
         }
 
     }
@@ -53,5 +56,9 @@ public class AuthorizeCommand implements Command {
     private boolean isDoctorValid(String login, String password) {
         DoctorDao doctorDao = daoFactory.getDoctorDao();
         return password.equals(doctorDao.getPassword(login));
+    }
+    private void putAttributes(HttpServletRequest req){
+        req.getSession(true).setAttribute(SORTS_PATIENT.getAttribute(), SortPatient.values());
+        req.getSession(true).setAttribute(SORTS_DOCTOR.getAttribute(), SortDoctor.values());
     }
 }

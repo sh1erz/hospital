@@ -1,4 +1,6 @@
 <%@ page import="controller.command.CommandList" %>
+<%@ page import="controller.util.constants.Attribute" %>
+<%@ page import="controller.util.constants.Page" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -6,7 +8,12 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
 <body>
-<input type="hidden" name="command" value="view">
+<form action="/controller" method="post">
+    <input type="hidden" name="command" value="<%=CommandList.LOGOUT%>"/>
+    <input type="submit" value="Logout" style="align-self: end"/>
+</form>
+
+<p>Patients</p>
 <table border="1">
     <thead>
     <tr>
@@ -23,6 +30,27 @@
     </c:forEach>
     </tbody>
 </table>
+
+<p>Doctors</p>
+<table border="1">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Specialisation</th>
+        <th>Login</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="d" items="${doctors}">
+        <tr>
+            <td>${d.name}</td>
+            <td>${d.doctorSpecialisationName}</td>
+            <td>${d.login}</td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
+
 <h2>Add patient</h2>
 <form method="post" action="/controller">
     <input type="hidden" name="command" value="<%=CommandList.ADD_PATIENT%>">

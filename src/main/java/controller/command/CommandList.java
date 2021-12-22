@@ -10,7 +10,9 @@ public enum CommandList {
     ADD_MEDCARD_RECORD(new AddMedcardRecordCommand()),
     SET_DIAGNOSIS(new SetDiagnosisCommand()),
     CHOOSE_PATIENT(new ChoosePatientCommand()),
-    SET_PERFORMER(new SetPerformerCommand());
+    SET_PERFORMER(new SetPerformerCommand()),
+    LOGOUT(new LogoutCommand()),
+    SORT(new SortCommand());
 
 
 

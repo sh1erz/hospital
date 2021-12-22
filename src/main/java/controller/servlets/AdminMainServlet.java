@@ -26,11 +26,12 @@ public class AdminMainServlet extends HttpServlet {
         DaoFactory daoFactory = DaoFactoryImpl.getInstance();
         PatientDao patientDao = daoFactory.getPatientDao();
         List<Patient> patient = patientDao.getAllPatientsAlphabetically();
-        req.setAttribute(PATIENTS.getAttribute(), patient);
+        req.getSession().setAttribute(PATIENTS.getAttribute(), patient);
         DoctorDao doctorDao = daoFactory.getDoctorDao();
         List<Doctor> doctors = doctorDao.getAllDoctorsAlphabetically();
         req.getSession().setAttribute(DOCTORS.getAttribute(), doctors);
         req.setAttribute(DOC_SPECIALISATION.getAttribute(), DoctorSpecialisation.values());
         req.getRequestDispatcher(JspPath.ADMIN_MAIN.getPath()).forward(req, resp);
+
     }
 }

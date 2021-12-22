@@ -10,7 +10,11 @@ public enum Attribute {
     PATIENT("patient"),
     ERROR("error"),
     PATIENT_RECORDS("records"),
-    PROCEDURE_TYPES("procedureTypes");
+    PROCEDURE_TYPES("procedureTypes"),
+    SORTS_DOCTOR("sortsDoctor"),
+    SORTS_PATIENT("sortPatient"),
+    SORTED_DOCTOR("sortedDoctors"),
+    SORTED_PATIENT("sortedPatients");
 
 
     private final String attribute;

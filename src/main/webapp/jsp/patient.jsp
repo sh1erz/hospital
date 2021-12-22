@@ -8,6 +8,10 @@
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 </head>
 <body>
+<form action="/controller" method="post" style="right: 0">
+    <input type="hidden" name="command" value="<%=CommandList.LOGOUT%>"/>
+    <input type="submit" value="Logout"/>
+</form>
 <p>Name: ${patient.name}</p>
 <p>Birth: ${patient.birth}</p>
 <p>Diagnosis: ${patient.diagnosis}</p><br>
