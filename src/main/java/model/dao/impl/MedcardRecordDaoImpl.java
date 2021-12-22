@@ -37,7 +37,7 @@ public class MedcardRecordDaoImpl implements MedcardRecordDao {
     @Override
     public boolean create(MedcardRecord medcardRecord) {
         boolean result = false;
-        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(PatientDaoImpl.SQLPatient.INSERT.QUERY)) {
+        try (PreparedStatement statement = connectionFactory.getConnection().prepareStatement(SQLMedcardRecord.INSERT.QUERY)) {
             statement.setInt(1, medcardRecord.getPatientId());
             statement.setString(2, medcardRecord.getProcedureType().name());
             statement.setString(3, medcardRecord.getDescription());

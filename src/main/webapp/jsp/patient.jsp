@@ -56,6 +56,27 @@
         <input type="submit"/>
     </form>
     </tbody>
-</table>
+</table><br>
+
+<h2>Create new record:</h2>
+<form action="/controller" method="post">
+    <input type="hidden" name="command" value="<%=CommandList.ADD_MEDCARD_RECORD%>"/>
+    <p>Description:</p>
+    <label>
+        <input type="text" name="description"/>
+    </label><br>
+    <p>Procedure type:</p>
+    <label>
+        <select name="procedureType">
+            <c:forEach items="${procedureTypes}" var="procedure">
+                <option value="${procedure.name()}">${procedure.name()}</option>
+            </c:forEach>
+        </select>
+    </label><br>
+    <input type="submit"/>
+
+</form>
+
+
 </body>
 </html>

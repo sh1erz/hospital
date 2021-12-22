@@ -2,10 +2,7 @@ package controller.servlets;
 
 import controller.util.constants.JspPath;
 import controller.util.constants.Page;
-import domain.Doctor;
-import domain.MedcardRecord;
-import domain.Nurse;
-import domain.Patient;
+import domain.*;
 import model.dao.impl.DaoFactoryImpl;
 import model.dao.interfaces.*;
 
@@ -35,12 +32,17 @@ public class PatientServlet extends HttpServlet {
             return;
         }
         patient = upToDatePatient.get();
-
+        req.getSession().setAttribute(PATIENT.getAttribute(),patient);
         setRecords(req, patient);
         setDoctors(req);
         setNurses(req);
+        setProcedureTypesAttribute(req);
 
         req.getRequestDispatcher(JspPath.PATIENT.getPath()).forward(req, resp);
+    }
+
+    private void setProcedureTypesAttribute(HttpServletRequest req){
+        req.getSession().setAttribute(PROCEDURE_TYPES.getAttribute(), ProcedureType.values());
     }
 
     private void setRecords(HttpServletRequest req, Patient patient) {

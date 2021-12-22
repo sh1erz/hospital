@@ -9,7 +9,8 @@ public enum Attribute {
     DOC_SPECIALISATION("specialisations"),
     PATIENT("patient"),
     ERROR("error"),
-    PATIENT_RECORDS("records");
+    PATIENT_RECORDS("records"),
+    PROCEDURE_TYPES("procedureTypes");
 
 
     private final String attribute;
